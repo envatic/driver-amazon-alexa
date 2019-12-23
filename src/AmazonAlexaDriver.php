@@ -29,9 +29,9 @@ class AmazonAlexaDriver extends HttpDriver
      */
     public function buildPayload(Request $request)
     {
-        $appId = env('AMAZON_APP_ID', null);
+        $appId = env('AMAZON_APP_ID', '');
         
-        if (is_null($appId)) {
+        if (empty($appId)) {
             abort(500);
         }
 
