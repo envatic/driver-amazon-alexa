@@ -29,6 +29,10 @@ class AmazonAlexaDriver extends HttpDriver
      */
     public function buildPayload(Request $request)
     {
+        $rawRequest = $request->getContent();
+        $alexaRequestFactory = new \Alexa\Request\RequestFactory();
+        $alexaRequest = $alexaRequestFactory->fromRawData($rawRequest);
+
         $this->payload = Collection::make((array) json_decode($request->getContent(), true));
         $this->event = Collection::make((array) $this->payload->get('request'));
         $this->config = Collection::make($this->config->get('amazon-alexa', []));
