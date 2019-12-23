@@ -11,16 +11,22 @@ class AlexaResponse extends Response
 
     const TYPE_SSML = 'SSML';
 
-    public function respondText(string $text)
+    public function respondText($text)
     {
-        $this->outputSpeech = new AlexaOutputSpeech;
-        $this->outputSpeech->type = self::TYPE_PLAIN_TEXT;
-        $this->outputSpeech->text = $text;
+        // $this->outputSpeech = new AlexaOutputSpeech;
+        // $this->outputSpeech->type = self::TYPE_PLAIN_TEXT;
+        // $this->outputSpeech->text = $text;
+        $this->respond($text);
 
         return $this;
     }
 
-    public function respondSsml(string $ssml)
+    public function responseSSML($ssml)
+    {
+        return $this->respondSsml($ssml);
+    }
+
+    public function respondSsml($ssml)
     {
         $this->outputSpeech = new AlexaOutputSpeech;
         $this->outputSpeech->type = self::TYPE_SSML;
