@@ -29,10 +29,16 @@ class AmazonAlexaDriver extends HttpDriver
      */
     public function buildPayload(Request $request)
     {
+        $appId = env('AMAZON_APP_ID', null);
+        
+        if (is_null($appId)) {
+            abort(500);
+        }
+
         $rawRequest = $request->getContent();
         $alexaRequestFactory = new \Alexa\Request\RequestFactory();
-        // Pass an empty array of Amazon application IDs for now
-        $alexaRequest = $alexaRequestFactory->fromRawData($rawRequest, []);
+        // Pass an empty Amazon application ID for now
+        $alexaRequest = $alexaRequestFactory->fromRawData($rawRequest, [$appId]);
 
         $this->payload = Collection::make((array) json_decode($request->getContent(), true));
         $this->event = Collection::make((array) $this->payload->get('request'));
