@@ -18,7 +18,7 @@
     "require": {
         "php": ">=7.1",
         "botman/botman": "~2.0",
-        "froodley/amazon-alexa-php": "^0.5.2",
+        "jakubsuchy/amazon-alexa-php": "dev-master",
         "techworker/ssml": "^1.0"
     },
     "require-dev": {
