@@ -47,7 +47,7 @@ class AmazonAlexaDriver extends HttpDriver
         }
 
         /* This does the validation of the request, but we don't use the result */
-        $rawRequest = $request->getContent;
+        $rawRequest = $request->getContent();
         $alexa = new \Alexa\Request\Request($rawRequest, $appId);
         $alexaRequest = $alexa->fromData();
 
