@@ -33,12 +33,12 @@ class AmazonAlexaDriver extends HttpDriver
         $this->event = collect();
         $this->config = collect();
 
-        // $rawRequest = $request->getContent();
+        $rawRequest = $request->getContent();
 
-        // if (empty($rawRequest)) {
-        //     // Probably a package discovery
-        //     return;
-        // }
+        if (empty($rawRequest)) {
+            // Probably a package discovery
+            return;
+        }
 
         $appId = env('AMAZON_APP_ID', '');
         
