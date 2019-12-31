@@ -53,8 +53,8 @@ class AmazonAlexaDriver extends HttpDriver
         $requestArray = (array) json_decode($request->getContent());
         
         // Fix up Launch Requests which don't send an intent
-        if ($this->payload['request']['type'] === 'LaunchRequest') {
-            $this->payload['request']['intent']['name'] = 'LaunchRequest';
+        if ($requestArray['request']['type'] === 'LaunchRequest') {
+            $requestArray['request']['intent']['name'] = 'LaunchRequest';
         }
 
         $this->payload = Collection::make($requestArray, true);
