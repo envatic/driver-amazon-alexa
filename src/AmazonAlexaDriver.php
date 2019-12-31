@@ -49,15 +49,8 @@ class AmazonAlexaDriver extends HttpDriver
         /* This does the validation of the request, but we don't use the result */
         $alexa = new \Alexa\Request\Request($rawRequest, $appId);
         $alexaRequest = $alexa->fromData();
-
-        $requestArray = (array) json_decode($rawRequest, true);
         
-        // Fix up Launch Requests which don't send an intent
-        if ($requestArray['request']['type'] === 'LaunchRequest') {
-            $requestArray['request']['intent']['name'] = 'LaunchRequest';
-        }
-
-        $this->payload = Collection::make($requestArray, true);
+        $this->payload = Collection::make((array) json_decode($rawRequest, true));
         $this->event = Collection::make((array) $this->payload->get('request'));
         $this->config = Collection::make($this->config->get('amazon-alexa', []));
     }
