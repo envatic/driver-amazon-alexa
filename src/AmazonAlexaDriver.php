@@ -50,7 +50,7 @@ class AmazonAlexaDriver extends HttpDriver
         $alexa = new \Alexa\Request\Request($rawRequest, $appId);
         $alexaRequest = $alexa->fromData();
 
-        $requestArray = (array) json_decode($request->getContent());
+        $requestArray = (array) json_decode($rawRequest(), true);
         
         // Fix up Launch Requests which don't send an intent
         if ($requestArray['request']['type'] === 'LaunchRequest') {
