@@ -39,16 +39,6 @@ class AmazonAlexaDriver extends HttpDriver
             // Probably a package discovery
             return;
         }
-
-        $appId = env('AMAZON_APP_ID', '');
-        
-        if (empty($appId)) {
-            abort(500);
-        }
-
-        /* This does the validation of the request, but we don't use the result */
-        $alexa = new \Alexa\Request\Request($rawRequest, $appId);
-        $alexaRequest = $alexa->fromData();
         
         $this->payload = Collection::make((array) json_decode($rawRequest, true));
         $this->event = Collection::make((array) $this->payload->get('request'));
@@ -71,7 +61,23 @@ class AmazonAlexaDriver extends HttpDriver
      */
     public function matchesRequest()
     {
-        return $this->event->has('requestId') && $this->event->has('type');
+        if (! $this->event->has('requestId') || ! $this->event->has('type')) {
+            return false;
+        }
+
+        // It looks like an Amazon request. Let's validate it.
+        $appId = env('AMAZON_APP_ID', '');
+
+        if (empty($appId)) {
+            abort(500);
+        }
+
+        /* This does the validation of the request, but we don't use the result */
+        $alexa = new \Alexa\Request\Request($rawRequest, $appId);
+        $alexaRequest = $alexa->fromData();
+
+        // If we get here then we're correct and validated
+        return true;
     }
 
     /**
