@@ -64,16 +64,8 @@ class AmazonAlexaDriver extends HttpDriver
         if (! $this->event->has('requestId') || ! $this->event->has('type')) {
             return false;
         }
-
-        // It looks like an Amazon request. Let's validate it.
-        $appId = env('AMAZON_APP_ID', '');
-
-        if (empty($appId)) {
-            abort(500);
-        }
-
         /* This does the validation of the request, but we don't use the result */
-        $alexa = new \Alexa\Request\Request(request()->getContent(), $appId);
+        $alexa = new \Alexa\Request\Request(request()->getContent());
         $alexaRequest = $alexa->fromData();
 
         // If we get here then we're correct and validated
